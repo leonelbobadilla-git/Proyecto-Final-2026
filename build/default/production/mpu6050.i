@@ -1,4 +1,4 @@
-# 1 "user.c"
+# 1 "mpu6050.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "user.c" 2
-# 15 "user.c"
+# 1 "mpu6050.c" 2
+# 15 "mpu6050.c"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2630,10 +2630,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\xc.h" 2 3
-# 15 "user.c" 2
+# 15 "mpu6050.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 16 "user.c" 2
+# 16 "mpu6050.c" 2
 
 
 # 1 "./system.h" 1
@@ -2651,88 +2651,63 @@ extern __bank0 __bit __timeout;
 
 #pragma config BOR4V = BOR21V
 #pragma config WRT = OFF
-# 18 "user.c" 2
+# 18 "mpu6050.c" 2
 
-# 1 "./user.h" 1
-# 15 "./user.h"
+# 1 "./mpu6050.h" 1
+# 16 "./mpu6050.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
-# 15 "./user.h" 2
-# 35 "./user.h"
-void appInit(void);
-# 19 "user.c" 2
-# 40 "user.c"
-void appInit(void) {
-
-
-
-    ANSEL = 0;
-    ANSELH = 0;
-
-    TRIS_TEC1 = 1;
-    TRIS_TEC2 = 1;
-    TRIS_TEC3 = 1;
-    TRIS_TEC4 = 1;
-
-    TRIS_LED1 = 0;
-    TRIS_LED2 = 0;
-    TRIS_LED3 = 0;
-    TRIS_LED4 = 0;
-
-    _delay((unsigned long)((100)*(4000000L/4000.0)));
+# 16 "./mpu6050.h" 2
+# 31 "./mpu6050.h"
+typedef struct {
+    int16_t accel_x;
+    int16_t accel_y;
+    int16_t accel_z;
+    int16_t temp;
+    int16_t gyro_x;
+    int16_t gyro_y;
+    int16_t gyro_z;
+} MPU6050_Data;
 
 
 
 
 
+
+void MPU6050_Init(void);
+void MPU6050_UpdateData(MPU6050_Data* data);
+# 19 "mpu6050.c" 2
+# 42 "mpu6050.c"
+void MPU6050_Init() {
+    I2C_Start();
+    I2C_Write(0xD0);
+    I2C_Write(0x6B);
+    I2C_Write(0x00);
+    I2C_Stop();
 }
 
 
 
 
 
+void MPU6050_UpdateData(MPU6050_Data* data) {
+    I2C_Start();
+    I2C_Write(0xD0);
+    I2C_Write(0x3B);
 
-void I2C_Init(const unsigned long clock_freq) {
-    SSPCON = 0b00101000;
-    SSPCON2 = 0;
-    SSPADD = (8000000 / (4 * clock_freq)) - 1;
-    SSPSTAT = 0;
-    TRISC3 = 1;
-    TRISC4 = 1;
-}
+    I2C_Repeated_Start();
+    I2C_Write(0xD1);
 
-void I2C_Wait() {
 
-    while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));
-}
 
-void I2C_Start() {
-    I2C_Wait();
-    SEN = 1;
-}
+    data->accel_x = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->accel_y = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->accel_z = (I2C_Read(1) << 8) | I2C_Read(1);
 
-void I2C_Repeated_Start() {
-    I2C_Wait();
-    RSEN = 1;
-}
+    data->temp = (I2C_Read(1) << 8) | I2C_Read(1);
 
-void I2C_Stop() {
-    I2C_Wait();
-    PEN = 1;
-}
+    data->gyro_x = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->gyro_y = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->gyro_z = (I2C_Read(1) << 8) | I2C_Read(0);
 
-void I2C_Write(unsigned char data) {
-    I2C_Wait();
-    SSPBUF = data;
-}
-
-unsigned char I2C_Read(unsigned char ack) {
-    unsigned char temp;
-    I2C_Wait();
-    RCEN = 1;
-    I2C_Wait();
-    temp = SSPBUF;
-    I2C_Wait();
-    ACKDT = (ack) ? 0 : 1;
-    ACKEN = 1;
-    return temp;
+    I2C_Stop();
 }

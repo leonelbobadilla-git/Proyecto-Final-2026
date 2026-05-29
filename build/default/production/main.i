@@ -2758,32 +2758,49 @@ extern int printf(const char *, ...);
 # 35 "./user.h"
 void appInit(void);
 # 16 "main.c" 2
-# 27 "main.c"
-void main(void) {
 
-    uint8_t comando;
-    uartReadByte(&comando);
+# 1 "./mpu6050.h" 1
+# 16 "./mpu6050.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.40\\pic\\include\\c90\\stdint.h" 1 3
+# 16 "./mpu6050.h" 2
+# 31 "./mpu6050.h"
+typedef struct {
+    int16_t accel_x;
+    int16_t accel_y;
+    int16_t accel_z;
+    int16_t temp;
+    int16_t gyro_x;
+    int16_t gyro_y;
+    int16_t gyro_z;
+} MPU6050_Data;
 
-    appInit();
-    uartInit();
-    displayInit();
 
-    PIN_LED1 = 1;
-    PIN_LED2 = 1;
-    PIN_LED3 = 1;
-    PIN_LED4 = 1;
 
-    while (1) {
-        for(uint8_t n = 0; n < 10; n++){
-            displayWrite(n);
-            _delay((unsigned long)((250)*(4000000L/4000.0)));
-        }
 
-        for(uint8_t n = 8; n > 0; n--){
-            displayWrite(n);
-            _delay((unsigned long)((250)*(4000000L/4000.0)));
-        }
 
-        uartWriteByte('*');
+
+void MPU6050_Init(void);
+void MPU6050_UpdateData(MPU6050_Data* data);
+# 17 "main.c" 2
+# 28 "main.c"
+void main() {
+
+    MPU6050_Data mis_datos_mpu;
+
+
+    I2C_Init(100000);
+
+
+    MPU6050_Init();
+
+    while(1) {
+
+        MPU6050_UpdateData(&mis_datos_mpu);
+
+
+
+
+
+        _delay((unsigned long)((100)*(4000000L/4000.0)));
     }
 }
