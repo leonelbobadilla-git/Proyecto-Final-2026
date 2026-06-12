@@ -1,20 +1,23 @@
 /*============================================================================
  * Licencia:
  * Autor: Leonel Bobadilla
- * Fecha: 24.04.2026
+ * Fecha: 13.05.2026
  *===========================================================================*/
 /** @file
- * @brief	Contiene la función principal
+ * @brief	Contiene las definiciones de user
  * 
- * Aquí se encuentra la implementación de la función principal
+ * Aquí se encuentra la implementación de users, los defines, macros, 
+ * datos internos y externos, declaraciones y definiciones de funciones
+ * internas y definiciones de funciones externas.
  */
+
 /*==================[inlcusiones]============================================*/
 #include <xc.h>         /* Archivo de Encabezados General XC8 */
-#include <stdint.h>     /* Para las definiciones de uint8_t por ej.*/
-#include <stdio.h>      /* Archivo de Encabezados StdIO */
-#include "system.h"     /* Funciones/Parametros System, como osc/peripheral config */
+#include <stdint.h>     /* para las definiciones de uint8_t por ej.*/
+
+#include "system.h"     /* Funciones/Parametros System, como conf de osc/perif */
 #include "user.h"       /* Funciones/Parametros User, como InitApp */
-#include "mpu6050.h"       /* Funciones/Parametros User, como InitApp */
+#include "mpu6050.h"    /* Funciones/Parametros MPU6050 */
 
 /*==================[definiciones y macros]==================================*/
 
@@ -25,25 +28,12 @@
 /*==================[declaraciones de funciones internas]====================*/
 
 /*==================[funcion principal]======================================*/
-void main() {
-    // Variable global o local para guardar los datos
-    MPU6050_Data mis_datos_mpu;
-
-    // Inicializa el I2C a 100 kHz (Estándar I2C)
-    I2C_Init(100000); 
+void main(void) {
+    /* TODO: Agregar el Cod1iogo de la Aplicación aquí */
+    appInit();          /* Inicializa I/O y Periféricos de la aplicación */
     
-    // Despierta el sensor
-    MPU6050_Init();
-    
-    while(1) {
-        // Llamas a tu rutina pasándole la dirección de memoria de tu estructura
-        MPU6050_UpdateData(&mis_datos_mpu);
-        
-        // ¡Listo! Aquí ya puedes pasar 'mis_datos_mpu' a tus funciones de análisis
-        // evaluar_reposo(mis_datos_mpu.accel_x, mis_datos_mpu.accel_y, mis_datos_mpu.accel_z);
-        // ...
-        
-        __delay_ms(100); // Pequeño retardo entre lecturas
+    while(1){
+        //TODO
     }
 }
 

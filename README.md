@@ -1,7 +1,7 @@
 # Proyecto-Final-2026
 ## Prefacio
 Es un proyecto etc.
-*Ejemplo de texto en itálica*. **Ejemplo de texto en negrita**
+*Ejemplo de texto en itálica*. **Ejemplo de texto en negrita**.
 
 ***
 
@@ -15,7 +15,10 @@ Es el microcontrolador principal.
 Es el giróscopo.
 
 ### SIM 800L
-Se conecta a la red GSM.
+Se conecta a la red GSM
+
+### Detector de pulso
+Mide el pulso cardíaco
 
 ***
 
@@ -29,4 +32,4 @@ Contiene el código principal.
 Define los periféricos del Raspberry.
 
 ### mpu6050.c y mpu6050.h
-Permite comunicación con el microprocesador Raspberry por protocolo I2C.
+Permite comunicación entre el MPU6050 y el microprocesador Raspberry por protocolo I2C.

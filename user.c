@@ -44,16 +44,6 @@ void appInit(void) {
     ANSEL = 0;
     ANSELH = 0;
     
-    TRIS_TEC1 = 1;
-    TRIS_TEC2 = 1;
-    TRIS_TEC3 = 1;
-    TRIS_TEC4 = 1;
-    
-    TRIS_LED1 = 0;
-    TRIS_LED2 = 0;
-    TRIS_LED3 = 0;
-    TRIS_LED4 = 0;
-    
     __delay_ms(100); //Espera que se estabilice la fuente
     
     /* TODO: Habilita Interrupciones si es necesario*/
@@ -64,7 +54,7 @@ void appInit(void) {
 
 /*==================[fin del archivo]========================================*/
 
-// Define la frecuencia de tu cristal (ej. 8MHz) - ¡Ajusta esto a tu hardware!
+/*// Define la frecuencia de tu cristal (ej. 8MHz) - ¡Ajusta esto a tu hardware!
 #define _XTAL_FREQ 8000000 
 
 void I2C_Init(const unsigned long clock_freq) {
@@ -111,4 +101,4 @@ unsigned char I2C_Read(unsigned char ack) {
     ACKDT = (ack) ? 0 : 1; // 0 = ACK (quiero más datos), 1 = NACK (no quiero más datos)
     ACKEN = 1;     // Envía el bit de ACK/NACK
     return temp;
-}
+}*/

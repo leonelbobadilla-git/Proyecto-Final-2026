@@ -1,8 +1,14 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[p mainexit ]
-"35 ./user.h
-[; ;./user.h: 35: void appInit(void);
-[v _appInit `(v ~T0 @X0 0 ef ]
+"3388 C:\Program Files\Microchip\xc8\v2.40\pic\include\proc\pic16f887.h
+[; ;C:\Program Files\Microchip\xc8\v2.40\pic\include\proc\pic16f887.h: 3388: extern volatile unsigned char ANSEL __attribute__((address(0x188)));
+[v _ANSEL `Vuc ~T0 @X0 0 e@392 ]
+"3450
+[; ;C:\Program Files\Microchip\xc8\v2.40\pic\include\proc\pic16f887.h: 3450: extern volatile unsigned char ANSELH __attribute__((address(0x189)));
+[v _ANSELH `Vuc ~T0 @X0 0 e@393 ]
+[v F36 `(v ~T0 @X0 1 tf1`ul ]
+"12 C:\Program Files\Microchip\xc8\v2.40\pic\include\builtins.h
+[v __delay `JF36 ~T0 @X0 0 e ]
+[p i __delay ]
 "55 C:\Program Files\Microchip\xc8\v2.40\pic\include\proc\pic16f887.h
 [; ;C:\Program Files\Microchip\xc8\v2.40\pic\include\proc\pic16f887.h: 55: __asm("INDF equ 00h");
 [; <" INDF equ 00h ;# ">
@@ -261,27 +267,22 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p x BOR4V  =  BOR21V    ]
 "38
 [p x WRT  =  OFF         ]
-[v $root$_main `(v ~T0 @X0 0 e ]
-"31 main.c
-[; ;main.c: 31: void main(void) {
-[v _main `(v ~T0 @X0 1 ef ]
+"40 user.c
+[; ;user.c: 40: void appInit(void) {
+[v _appInit `(v ~T0 @X0 1 ef ]
 {
-[e :U _main ]
+[e :U _appInit ]
 [f ]
-"33
-[; ;main.c: 33:     appInit();
-[e ( _appInit ..  ]
-"35
-[; ;main.c: 35:     while(1){
-[e :U 141 ]
-{
-"37
-[; ;main.c: 37:     }
-}
-[e :U 140 ]
-[e $U 141  ]
-[e :U 142 ]
-"38
-[; ;main.c: 38: }
-[e :UE 139 ]
+"44
+[; ;user.c: 44:     ANSEL = 0;
+[e = _ANSEL -> -> 0 `i `uc ]
+"45
+[; ;user.c: 45:     ANSELH = 0;
+[e = _ANSELH -> -> 0 `i `uc ]
+"47
+[; ;user.c: 47:     _delay((unsigned long)((100)*(4000000L/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+"53
+[; ;user.c: 53: }
+[e :UE 138 ]
 }
