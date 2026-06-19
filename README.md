@@ -12,7 +12,11 @@ Estos son los módulos a utilizar:
 Es el microcontrolador principal.
 
 ### MPU6050
-Es el giróscopo.
+Es el giróscopo y acelerómetro.
+Está conectado por cuatro pines con el Raspberry:
+- SDA y SCL: para el protocolo I2C.
+- INT: para las interrupciones del MPU6050 de cada vez que éste sale del SLEEP mode,  mide y vuelve a dormir.
+- Una para el clock.
 
 ### SIM 800L
 Se conecta a la red GSM

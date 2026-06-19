@@ -16,9 +16,7 @@
 #include <stdint.h>     /* para las definiciones de uint8_t por ej.*/
 
 #include "system.h"     /* Funciones/Parametros System, como conf de osc/perif */
-#include "user.h"       /* Funciones/Parametros User, como InitApp */
-#include "i2c.h"        /* Funciones/Parametros I2C */
-#include "mpu6050.h"    /* Funciones/Parametros MPU6050 */
+#include "i2c.h"        /* Funciones/Parametros protocolo I2C */
 
 /*==================[definiciones y macros]==================================*/
 
@@ -27,20 +25,14 @@
 /*==================[definiciones de datos externos]=========================*/
 
 /*==================[declaraciones de funciones internas]====================*/
-
-/*==================[funcion principal]======================================*/
-void main(void) {
-    /* TODO: Agregar el Cod1iogo de la Aplicación aquí */
-    appInit();      /* Inicializa I/O y Periféricos de la aplicación */
-    i2cInit();      /* Inicializa I/O y Periféricos del protocolo I2C */
-    MPU6050Init();  /* Inicializa I/O y Periféricos del módulo MPU6050 */
-    
-    while(1){
-        //TODO
-    }
+void i2cInit(void){ //Inicializa el protocolo I2C
+    //i2c_init(I2C_PORT, 400 * 1000);
+    //configurar sus pines como I/O
+        //TRIS_SCL = ;
+        //TRIS_SDA = ;
+    //configurar la velocidad de comunicación
+    //configurar el flanco 
 }
-
-/*==================[definiciones de funciones internas]=====================*/
 
 /*==================[definiciones de funciones externas]=====================*/
 

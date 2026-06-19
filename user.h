@@ -18,12 +18,8 @@
 /* User Level #define Macros                                                 */
 /* TODO: Los parámetros de user.c pueden ponerse aquí */
 
-/**/
-/*
- * ACÁ SE PONE LO DE
- *  #define DISPLAY_PORT PORTD
- */
-/**/
+#define ASDFASDFGHJKLLKAJSDFLKHJGHAFJ PORTD
+#define ASDFASDFGHJKLLKAJSDFLKHJGHAFJ TRISD
 
 /*==================[tipos de datos declarados por el usuario]===============*/
 

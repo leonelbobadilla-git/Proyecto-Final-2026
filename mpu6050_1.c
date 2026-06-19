@@ -39,10 +39,7 @@
  * @brief	Rutina para despertar el MPU6050 (debe llamarse una vez al inicio)
  * @return	Nada
  */
-void MPU6050Init(void) {
-    //Primero lo despierto
-    //Luego verifico y configuro las direcciones y registros que correspondan
-    //Después declaro el tipo de flanco (debe ser igual al declarado para el I2C)
+void MPU6050_Init() {
     I2C_Start();
     I2C_Write(MPU6050_WRITE_ADDR);
     I2C_Write(0x6B); // Registro PWR_MGMT_1
@@ -54,7 +51,7 @@ void MPU6050Init(void) {
  * @brief	Rutina principal para obtener todos los datos
  * @return	Nada
  */
-void MPU6050Read(MPU6050_Buz* buz, len) {
+void MPU6050_UpdateData(MPU6050_Data* data) {
     I2C_Start();
     I2C_Write(MPU6050_WRITE_ADDR); // Apuntamos al sensor para escribir
     I2C_Write(0x3B);               // Registro inicial (ACCEL_XOUT_H)
@@ -64,16 +61,15 @@ void MPU6050Read(MPU6050_Buz* buz, len) {
     
     // Leemos secuencialmente los 14 bytes
     // Mandamos un "1" (ACK) para seguir leyendo, y un "0" (NACK) en el último byte
-    /* hay que verificar que el primero byte de cada eje es el H o el L, y en base a eso tratar ambos bytes de modo que me queden en el orden HL y no LH */
-    buz->accel_x = (I2C_Read(1) << 8) | I2C_Read(1);
-    buz->accel_y = (I2C_Read(1) << 8) | I2C_Read(1);
-    buz->accel_z = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->accel_x = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->accel_y = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->accel_z = (I2C_Read(1) << 8) | I2C_Read(1);
     
-    buz->temp    = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->temp    = (I2C_Read(1) << 8) | I2C_Read(1);
     
-    buz->gyro_x  = (I2C_Read(1) << 8) | I2C_Read(1);
-    buz->gyro_y  = (I2C_Read(1) << 8) | I2C_Read(1);
-    buz->gyro_z  = (I2C_Read(1) << 8) | I2C_Read(0); // Último byte: NACK (0)
+    data->gyro_x  = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->gyro_y  = (I2C_Read(1) << 8) | I2C_Read(1);
+    data->gyro_z  = (I2C_Read(1) << 8) | I2C_Read(0); // Último byte: NACK (0)
     
     I2C_Stop();
 }
