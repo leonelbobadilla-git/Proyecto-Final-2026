@@ -55,7 +55,7 @@ void MPU6050Init(void) {
  * @return	Nada
  */
 void MPU6050Read(MPU6050_Buz* buz, len) {
-    I2C_Start();
+    I2C_Start();                    //
     I2C_Write(MPU6050_WRITE_ADDR); // Apuntamos al sensor para escribir
     I2C_Write(0x3B);               // Registro inicial (ACCEL_XOUT_H)
     
@@ -65,6 +65,7 @@ void MPU6050Read(MPU6050_Buz* buz, len) {
     // Leemos secuencialmente los 14 bytes
     // Mandamos un "1" (ACK) para seguir leyendo, y un "0" (NACK) en el último byte
     /* hay que verificar que el primero byte de cada eje es el H o el L, y en base a eso tratar ambos bytes de modo que me queden en el orden HL y no LH */
+    /* Se recibe H y luego L, por lo que queda HL */
     buz->accel_x = (I2C_Read(1) << 8) | I2C_Read(1);
     buz->accel_y = (I2C_Read(1) << 8) | I2C_Read(1);
     buz->accel_z = (I2C_Read(1) << 8) | I2C_Read(1);

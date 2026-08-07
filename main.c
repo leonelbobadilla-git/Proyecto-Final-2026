@@ -1,6 +1,6 @@
 /*============================================================================
  * Licencia:
- * Autor: Leonel Bobadilla
+ * Autor: Homero y Dante Alighieri
  * Fecha: 13.05.2026
  *===========================================================================*/
 /** @file
@@ -39,6 +39,16 @@ void main(void) {
         //TODO
     }
 }
+
+/* 
+ * ID del integrado
+ * Puerto sincrónico y half duplex (el maestro habla  primero)
+ * 
+ */
+
+/*
+ * El giróscopo se alimenta con 3V3
+ */
 
 /*==================[definiciones de funciones internas]=====================*/
 
